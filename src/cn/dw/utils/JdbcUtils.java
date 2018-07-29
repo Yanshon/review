@@ -28,7 +28,7 @@ public class JdbcUtils {
 		
 		try {
 			System.out.println("4");
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "root", "root");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?characterEncoding=UTF-8", "root", "root");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("5");
@@ -37,11 +37,11 @@ public class JdbcUtils {
 	}
 	
 	
-	public static void main (String[] agrs) {		
-		JdbcUtils utils = new JdbcUtils(); 	
-		Connection conn=null;
-		conn=utils.getConnection();
-		System.out.println(conn);		
-	}
+//	public static void main (String[] agrs) {		
+//		JdbcUtils utils = new JdbcUtils(); 	
+//		Connection conn=null;
+//		conn=utils.getConnection();
+//		System.out.println(conn);		
+//	}
 	
 }
