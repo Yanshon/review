@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.jdbc.StreamingNotifiable;
 
@@ -14,8 +16,65 @@ import cn.dw.utils.JdbcUtils;
 public class ProductDao extends BaseDao {
 
 	// main方法测试的缺点: 1: 不能保留测试痕迹  2：main写测试代码有侵入性
-	public static void main(String[] args) {}
+	public static void main(String[] args) {
+		
+//		        // 数组限制大小,限制类型
+//				int[] i = new int[] {1,2,3,4,5};
+//				// 集合: 不限大小与类型
+//				ArrayList list = new ArrayList();
+//				list.add("A");
+//				list.add(new Date());
+//				list.add(2);
+//				// 泛型集合：不限大小,限制类型
+//				ArrayList<String> sList=new ArrayList<String>();
+//				sList.add("abc");
+		
+	}
 
+	public ArrayList<Product> queryByName(String keyword) {
+
+		ArrayList<Product> proList = new ArrayList<Product>();
+		String sql = "select * from product where name like ?";
+		JdbcUtils utils = new JdbcUtils();
+		Connection conn = null;
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+
+		try {
+			conn = utils.getConnection();
+			pre = conn.prepareStatement(sql);
+			pre.setString(1, "%" + keyword + "%");
+			rs = pre.executeQuery();
+			while (rs.next()) {
+
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setPrice(rs.getDouble("price"));
+				product.setRemark(rs.getString("remark"));
+				product.setDate(rs.getDate("date"));
+				proList.add(product);
+			}
+			return proList;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw new RuntimeException(e);
+
+		} finally {
+			try {
+				rs.close();
+				pre.close();
+				conn.close();
+
+			} catch (SQLException e) {
+				// TODO: handle exception
+				throw new RuntimeException(e);
+
+			}
+		}
+	}
+
+	
 	public Product getById(int id) {
 		Product product = null;
 		String sql = "select * from product where id = ?";
