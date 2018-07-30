@@ -2,20 +2,14 @@ package cn.dw.model;
 
 import java.util.Date;
 
-//实体类，类——》表。
-public class Product {
-
-//	   id                  int not null auto_increment,
-//	   name                varchar(20),
-//	   price               decimal(8,2),
-//	   remark              longtext,
-//	   date                timestamp default CURRENT_TIMESTAMP,
+// 实体类：一般与数据的的表对应  类 --> 表   对象 --> 记录
+public class Product extends Object{
+	
 	private Integer id;
 	private String name;
 	private Double price;
 	private String remark;
 	private Date date;
-	
 	
 	public Integer getId() {
 		return id;
@@ -52,6 +46,4 @@ public class Product {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", remark=" + remark + ", date=" + date
 				+ "]";
 	}
-	
-	
 }
