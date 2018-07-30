@@ -59,9 +59,9 @@ public class ProductDaoTest {
 	@Test
 	public void testSave() {
 		Product product = new Product();
-		product.setName("小米手机4");
+		product.setName("123123");
 		product.setPrice(2400.00);
-		product.setRemark("商品备注4！");
+		product.setRemark("232323");
 		System.out.println(dao.save(product));
 	}
 

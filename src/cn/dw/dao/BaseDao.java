@@ -2,7 +2,9 @@ package cn.dw.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cn.dw.model.Product;
@@ -22,6 +24,51 @@ public class BaseDao extends Object {
 
 	// new Object[] { product.getName(), product.getPrice(), product.getRemark() }
 	// 抽取每个模块 insert update delete
+	
+	protected ArrayList<Product> queryByName(String sql,Object[]param) {
+		ArrayList<Product> proList = new ArrayList<Product>();
+		JdbcUtils utils = new JdbcUtils();
+		Connection conn = null;
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+
+		try {
+			conn = utils.getConnection();
+			pre = conn.prepareStatement(sql);
+			//给参数赋值，从1开始；
+			for (int i = 0; i < param.length; i++) {
+				pre.setObject(i+1,param[i]);
+			}
+			//把结果放进结果集
+			rs = pre.executeQuery();
+			while (rs.next()) {
+
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setPrice(rs.getDouble("price"));
+				product.setRemark(rs.getString("remark"));
+				product.setDate(rs.getDate("date"));
+				proList.add(product);
+			}
+			return proList;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw new RuntimeException(e);
+
+		} finally {
+			try {
+				rs.close();
+				pre.close();
+				conn.close();
+
+			} catch (SQLException e) {
+				// TODO: handle exception
+				throw new RuntimeException(e);
+
+			}
+		}
+	}
 	protected int executeUpdate(String sql, Object[] param) {
 		JdbcUtils jdbcUtils = new JdbcUtils();
 		// 1: 获取数据库连接
