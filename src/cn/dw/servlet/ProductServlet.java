@@ -1,6 +1,8 @@
 package cn.dw.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,14 +26,25 @@ public class ProductServlet extends HttpServlet {
 
     }
 //只能用来处理get请求
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		//1:获取查询的关键字keyword
+		String keyword =request.getParameter("keyword");
+		//2:调用业务逻辑（此处不需要添加%%）
+		ArrayList<Product> proList =new ArrayList<Product>();
+		proList=productService.queryByName(keyword);
+		for (Product temp:proList) {
+			System.out.println(temp);
+		//3:跳转查询页面,然后显示数据
+		response.sendRedirect(request.getContextPath()+"/query.jsp");
+		}
 		
 	}
 
 //只能用阿里处理post请求
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		
 		System.out.println("------doPost----");
 		//1.获取前端的数据
 		Product product =new Product();
@@ -43,7 +56,7 @@ public class ProductServlet extends HttpServlet {
 		int a=productService.save(product);
 		System.out.println(a);
 		//3.跳转到查询页面
-		
+		response.sendRedirect(request.getContextPath()+"/query.jsp");
 	}
 
 }

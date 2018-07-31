@@ -6,17 +6,9 @@
 <title>添加商品页面</title>
 </head>
 <body>
-	<form action="/Review_01/ProductServlet" method="post">
-
-		商品名称:<input type="text" name="name"></input><br></br> 商品价格:<input
-			type="text" name="money"></input><br></br> 商品备注:
-		<textarea rows="5" cols="30" name="remark"></textarea>
-		<br></br>
+	<form action="/Review_01/ProductServlet" method="get">
+		商品价格:<input type="text" name="keyword"></input><br></br>
 		<button type="submit">提交商品</button>
-
 	</form>
-
-
-
 </body>
 </html>
