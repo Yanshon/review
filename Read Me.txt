@@ -9,11 +9,7 @@
 get,post提交区别:
  
    1: get通过url传递参数,不适合敏感数据
-   
-   
-   
-   
+
    2: 如果多媒体数据(图片、视频)只能用post提交
-   
-   
+
 程序无报错，前端没有跳转到“http://localhost:8080/Review_01/ProductServlet”，重启Tomcat即可，因为修改java代码需要关闭Tomcat；
